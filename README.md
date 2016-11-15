@@ -5,7 +5,7 @@ My vim settings and installer
 
 - vimrc
 
-> cpvimrc ~/.vimrc
+> cp vimrc ~/.vimrc
 
 > vim +PluginInstall
 
