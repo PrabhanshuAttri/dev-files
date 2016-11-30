@@ -5,11 +5,11 @@ My vim settings and installer
 
 - vimrc
 
-> cp vimrc ~/.vimrc
+ > cp vimrc ~/.vimrc
 
-> git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+ > git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-> vim +PluginInstall
+ > vim +PluginInstall
 
 - bash_profile
 
