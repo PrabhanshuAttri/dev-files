@@ -1,5 +1,5 @@
 # vim
-My vim settings and installer
+My vim settings, terminal settings and installer
 
 ## Usage
 
