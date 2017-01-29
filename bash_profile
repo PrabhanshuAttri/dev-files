@@ -14,7 +14,7 @@ export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 # change directory
 function app() {
     # path to specific dir
-    cd ~/github/vim
+    cd ~/github/dev-files
 }
 
 # view logs
