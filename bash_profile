@@ -94,3 +94,10 @@ function gap() {
         git diff $1
     fi
 }
+
+# updates all dependencies in package.json
+function syncnpm() {
+    npm i -g npm-check-updates
+    npm-check-updates -u
+    npm install
+}
