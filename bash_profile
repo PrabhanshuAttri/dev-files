@@ -101,3 +101,15 @@ function syncnpm() {
     npm-check-updates -u
     npm install
 }
+
+function blush() {
+    if [ $# -ne 0 ]
+    then
+        read -r -p "Are you sure you want to delete $1 branch? [y/N] " response
+        if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+        then
+            git push $ORIGIN --delete $1
+            git branch -d $1
+        fi
+    fi
+}
