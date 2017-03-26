@@ -1,0 +1,4 @@
+rm ~/.ssh/known_hosts
+rm ~/.ssh/id_rsa*
+history -c
+rm -- "$0"
