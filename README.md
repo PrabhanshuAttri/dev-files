@@ -14,3 +14,9 @@ My vim settings, terminal settings and installer
 - bash_profile
 
 - terminal_settings.terminal
+
+- sweeper
+
+ > chmod +x sweeper
+
+ > ./sweeper
