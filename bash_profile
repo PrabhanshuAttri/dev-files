@@ -9,20 +9,11 @@ parse_git_branch() {
 export PATH=/usr/local/bin:$PATH
 export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 
+REMOTE_ORIGIN="remote_origin"
+ORIGIN="origin"
+MASTER="master"
+
 # jedis in disguise
-
-# change directory
-function app() {
-    # path to specific dir
-    cd ~/github/dev-files
-}
-
-# view logs
-function log() {
-    cd ~/log/dir
-    tail -f error.log
-}
-
 # show n running process (sorted by user)
 function kylo() {
     if [ $# -eq 0 ]
@@ -33,13 +24,29 @@ function kylo() {
     fi
 }
 
-# kill process
 function vader() {
     for process in "$@";
     do
         kill -9 $process;
     done
 }
+
+# remote ssh login
+alias remote_in="ssh username@192.0.0.0"
+alias zdevd="ssh prabhanshu.zdev.net"
+alias mount="sshfs username@192.0.0.0:/var/dir ~/local_dir"
+alias app="cd ~/github"
+# opens last opened screen
+alias sc="screen -d -RR"
+alias log="tail -f ~/log/dir/error.log"
+# git
+alias gs="git status"
+alias stash="git stash"
+alias pop="git stash pop"
+alias list="git stash list"
+alias drop="git stash drop"
+# Sync branch from remote
+alias bync="git fetch --prune"
 
 # clear cache
 function safai() {
