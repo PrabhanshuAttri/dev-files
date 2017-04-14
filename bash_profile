@@ -39,20 +39,16 @@ alias app="cd ~/github"
 # opens last opened screen
 alias sc="screen -d -RR"
 alias log="tail -f ~/log/dir/error.log"
+alias safai="rm -rf ~/path/to/cache/*"
 # git
 alias gs="git status"
+alias br="git branch"
 alias stash="git stash"
 alias pop="git stash pop"
 alias list="git stash list"
 alias drop="git stash drop"
 # Sync branch from remote
 alias bync="git fetch --prune"
-
-# clear cache
-function safai() {
-    cd ~/path/to/cache/
-    rm -rf *
-}
 
 # pull latest code in master branch
 function luke() {
@@ -74,10 +70,6 @@ function add() {
     fi
 }
 
-function br() {
-    git branch
-}
-
 function jump() {
     if [ $# -ne 0 ]
     then
@@ -87,10 +79,6 @@ function jump() {
 
 function hunt() {
     git grep $1
-}
-
-function gs() {
-    git status
 }
 
 function gap() {
