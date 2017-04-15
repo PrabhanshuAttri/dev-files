@@ -52,9 +52,10 @@ alias bync="git fetch --prune"
 
 # pull latest code in master branch
 function luke() {
-    git checkout master
-    git pull remote_origin master
-    git push origin master
+    stash
+    jump $MASTER
+    git pull $REMOTE_ORIGIN $MASTER
+    push
 }
 
 # pull latest code in current branch
