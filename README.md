@@ -5,11 +5,11 @@ My vim settings, terminal settings and installer
 
 - vimrc
 
-  > cp vimrc ~/.vimrc
-  
-  > git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  
-  > vim +PluginInstall
+```
+cp vimrc ~/.vimrc
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim +PluginInstall
+```
 
 - bash_profile
 
@@ -17,6 +17,7 @@ My vim settings, terminal settings and installer
 
 - sweeper
 
-  > chmod +x sweeper
-  
-  > ./sweeper
+```
+chmod +x sweeper
+./sweeper
+```
