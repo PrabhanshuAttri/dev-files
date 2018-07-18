@@ -1,27 +1,23 @@
 # vim
-My vim settings, terminal settings and installer
+My dot files.
 
 ## Usage
 
-- vimrc
+- Yoda.sh: Installs required softwares and copies bash_profile, tmux.conf, vimrc and zshrc
 
-  ```
-  cp vimrc ~/.vimrc
-  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  vim +PluginInstall
-  ```
+   ```        
+   # Install zsh
+   sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+   # Setup everything else
+   curl -o- https://raw.githubusercontent.com/PrabhanshuAttri/dotfiles/master/yoda.sh | bash
+   ```
 
-- bash_profile
+- Sweeper: Removes credentials and settings from the system
 
-- terminal_settings.terminal
-
-- sweeper
-
-  ```
-  chmod +x sweeper
-  ./sweeper
-  ```
-
+   ```
+   curl -o- https://raw.githubusercontent.com/PrabhanshuAttri/dotfiles/master/sweeper.sh | bash
+   ```
+   
 ## Issues
 
 1. **Autocomplete (Neocomplete) doesn't work in Vim**
