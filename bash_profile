@@ -1,14 +1,3 @@
-# sourcing bashrc
-source ~/.bashrc
-
-# Git branch in prompt.
-parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
-
-export PATH=/usr/local/bin:$PATH
-export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
-
 REMOTE_ORIGIN="remote_origin"
 ORIGIN="origin"
 MASTER="master"
@@ -16,32 +5,34 @@ MASTER="master"
 # jedis in disguise
 # show n running process (sorted by user)
 function kylo() {
-    if [ $# -eq 0 ]
-    then
-        ps aux | sort -n -k 1 | head -n 20
-    else
-        ps aux | sort -n -k 1 | head -n $1
-    fi
+  if [ $# -eq 0 ]
+  then
+    ps aux | sort -n -k 1 | head -n 20
+  else
+    ps aux | sort -n -k 1 | head -n $1
+  fi
 }
 
 function vader() {
-    for process in "$@";
-    do
-        kill -9 $process;
-    done
+  for process in "$@";
+  do
+    kill -9 $process;
+  done
 }
+
+alias app="cd ~/github"
 
 # remote ssh login
 alias remote_in="ssh username@192.0.0.0"
-alias zdevd="ssh prabhanshu.zdev.net"
 alias mount="sshfs username@192.0.0.0:/var/dir ~/local_dir"
-alias app="cd ~/github"
+alias log="tail -f ~/log/dir/error.log"
+alias safai="rm -rf /path/to/cache/*"
+
 # opens last opened screen
 alias sc="screen -d -RR"
-alias log="tail -f ~/log/dir/error.log"
-alias safai="rm -rf ~/path/to/cache/*"
+
 # git
-alias gs="git status"
+alias gits="git status"
 alias br="git branch"
 alias stash="git stash"
 alias pop="git stash pop"
@@ -49,63 +40,155 @@ alias list="git stash list"
 alias drop="git stash drop"
 # Sync branch from remote
 alias bync="git fetch --prune"
+alias exportenv="while read line; do export $line; done < ./.env;"
+alias exportheroku="while read line; do heroku config:set $line; echo $line; done < ./.env;"
 
-# pull latest code in master branch
-function luke() {
-    stash
-    jump $MASTER
-    git pull $REMOTE_ORIGIN $MASTER
-    push
+# kills ssh-agents
+function sshkiller() {
+  ps aux | grep -v 'grep ssh-agent -s' | grep 'ssh-agent -s' | awk '{print $2}' | while read a; do vader "$a"; done
 }
 
-# pull latest code in current branch
-function darkside() {
-    git pull remote_origin master
-    git push origin master
+# git log in
+function sin() {
+  eval "$(ssh-agent -s)"
+  for f in `find ~/.ssh/ -name '*_rsa'`; do ssh-add $f; done;
 }
 
-function add() {
-    if [ $# -ne 0 ]
-    then
-        git add $1
-    fi
-}
-
-function jump() {
-    if [ $# -ne 0 ]
-    then
-        git checkout $1
-    fi
+function gdiff() {
+  if [ $# -eq 0 ]
+  then
+    git diff -w
+  else
+    git diff -w $1
+  fi
 }
 
 function hunt() {
-    git grep $1
+  git grep $1
 }
 
-function gap() {
-    if [ $# -eq 0 ]
+function add() {
+  for file in "$@";
+  do
+    git add $file
+  done
+}
+
+function jump() {
+  if [ $# -ne 0 ]
+  then
+    git checkout $1
+  fi
+}
+
+function luke() {
+  original_branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+  echo "Branch: $original_branch"
+  stash
+  # minutes after which master will be updated from remote_origin
+  update_delta=30
+  export NOW_TIME="$(date +%s)"
+  isset_PULL_TIME=${PULL_TIME:- false}
+  last_run=$[ $((NOW_TIME- ${PULL_TIME:- $((NOW_TIME - (update_delta * 30)))})) / update_delta]
+  export NEXT_UPDATE="$(( update_delta-last_run ))"
+  if (( "$isset_PULL_TIME" ));
+  then
+    echo "Last updated master: $last_run minutes ago."
+  else
+    echo "Last updated master: ages ago."
+  fi
+  if [ "$original_branch" != "$MASTER" ]
+  then
+    jump $MASTER
+  fi
+  if (( (last_run) >= update_delta ));
+  then
+    echo "Updating now."
+    git pull $REMOTE_ORIGIN $MASTER
+    push
+    export PULL_TIME="$(date +%s)"
+    export NEXT_UPDATE=$update_delta
+  fi
+  echo "Next update in $NEXT_UPDATE minutes."
+}
+
+# TODO
+# git fetch $REMOTE_ORIGIN
+# git rebase -p "$ORIGIN/$MASTER
+function darkside() {
+  original_branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+  luke
+
+  if [ "$original_branch" != "$MASTER" ]
+  then
+    current_branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+    if [ "$original_branch" != "$current_branch" ]
     then
-        git diff
-    else
-        git diff $1
+      echo "Jump back: $original_branch"
+      jump $original_branch
     fi
+    git pull $ORIGIN $MASTER
+    push
+  fi
+}
+
+function push() {
+  branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+  echo "Pushing $branch"
+  if [ $# -eq 0 ]
+  then
+    git push $ORIGIN $branch
+  else
+    git push $ORIGIN $branch $1
+  fi
 }
 
 # updates all dependencies in package.json
 function syncnpm() {
-    npm i -g npm-check-updates
-    npm-check-updates -u
-    npm install
+  if [ $# -ne 0 ]
+  then
+    if [ "$1" == "g" ]
+    then
+      npm i -g ncu
+    fi
+  fi
+  ncu -u
+  npm install
 }
 
+# permanently deletes the branch
 function blush() {
-    if [ $# -ne 0 ]
+  remote=all
+  if [ $# -ne 0 ]
+  then
+    if [ $# -eq 1 ]
     then
-        read -r -p "Are you sure you want to delete $1 branch? [y/N] " response
-        if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
-        then
-            git push $ORIGIN --delete $1
-            git branch -d $1
-        fi
+      read -r -p "Are you sure you want to delete $1 branch from local? [y/N] " response
+      if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+      then
+        git branch -d $1
+      fi
+      echo "1" $1
+    elif [ $# = 2 ] && [ $2 = $remote ]
+    then
+      echo "2"
+      read -r -p "Are you sure you want to delete $1 branch from local as well as remote? [y/N] " response
+      if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+      then
+        git push $ORIGIN --delete $1
+        git branch -d $1
+        git branch -D $1
+      fi
+    else
+      echo "Usage:"
+      echo "For local: blush branchname"
+      echo "or"
+      echo "For local and remote: blush branchname all"
     fi
+  fi
 }
+
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
