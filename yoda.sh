@@ -1,31 +1,59 @@
 echo "Do or do not, there is no try."
 
+# How to export gpg keys
+# gpg --export-secret-keys > secret.asc
+# gpg --export-ownertrust > trust_db.txt
+
+function setGpg() {
+  GPG_PROGRAM=$1
+  GPG_SECRET=secret.asc
+  GPG_TRUSTDB=trust_db.txt
+  if [ -f GPG_SECRET ] && [ -f GPG_TRUSTDB ];
+  then
+    echo "GPG"
+    gpg --import GPG_SECRET
+    gpg --import-ownertrust GPG_TRUSTDB
+
+    git config --global commit.gpgsign true
+    git config --global gpg.program $GPG_PROGRAM
+
+    gpgconf --kill gpg-agent
+  fi
+}
+
 function fedora() {
   echo "Installing required packages"
   sudo dnf -y update
-  sudo dnf -y install vim-enhanced tmux cowsay fortune-mod
+  sudo dnf -y install vim-enhanced tmux cowsay fortune-mod gnupg
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+}
+
+function ubuntu() {
+  echo "Ubuntu"
 }
 
 function mac() {
   echo "Mac OSX"
 }
 
-unameOut="$(uname -s)"
-
+echo "Detecting OS"
 mac=Mac
 linux=Linux
 other=Other
+
+unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)
       machine="$linux"
       echo "OS Detected: ${machine}"
       fedora
+      setGpg gpg2
       ;;
     Darwin*)
       machine="$mac"
       echo "OS Detected: ${machine}"
       mac
+      setGpg gpg
       ;;
     *)
       machine="${unameOut}"
