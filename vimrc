@@ -1,5 +1,6 @@
 set history=1000
 
+
 " Text Formatting
 set autoindent                                               " autoindent
 set smartindent                                              " be smart about it
@@ -9,6 +10,7 @@ set tabstop=2                                                " actual tabs occup
 set softtabstop=2                                            " insert mode tab and backspace use 2 spaces
 set backspace=2                                              " Fix broken backspace in some setups
 set expandtab                                                " expand tabs to spaces
+set autoread                                                 " autoread file changes from disk
 
 set foldmethod=indent   " folds based on indentation
 set foldnestmax=10      " limit nesting of folds

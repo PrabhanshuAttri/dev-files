@@ -38,6 +38,7 @@ alias stash="git stash"
 alias pop="git stash pop"
 alias list="git stash list"
 alias drop="git stash drop"
+alias master="git checkout master"
 # Sync branch from remote
 alias bync="git fetch --prune"
 alias exportenv="while read line; do export $line; done < ./.env;"
@@ -50,8 +51,13 @@ function sshkiller() {
 
 # git log in
 function sin() {
-  eval "$(ssh-agent -s)"
-  for f in `find ~/.ssh/ -name '*_rsa'`; do ssh-add $f; done;
+  sshAgentCount=$(ps aux | grep -v 'grep ssh-agent -s' | grep 'ssh-agent -s' | wc -l | awk '{$1=$1};1')
+  echo $sshAgentCount
+  if [ $sshAgentCount -lt 2 ]
+  then
+    eval "$(ssh-agent -s)"
+    for f in `find ~/.ssh -name '*_rsa'`; do ssh-add $f; done;
+  fi
 }
 
 function gdiff() {
