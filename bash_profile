@@ -13,6 +13,15 @@ function kylo() {
   fi
 }
 
+function rey() {
+  if [ $# -eq 1 ]
+  then
+    ps aux | grep $1 | awk '{print $2}' | xargs kill -9
+  else
+    echo "Please provide process name to search. Eg. rey zsh"
+  fi
+}
+
 function vader() {
   for process in "$@";
   do
@@ -20,7 +29,7 @@ function vader() {
   done
 }
 
-alias app="cd ~/github"
+alias root="cd ~/github"
 
 # remote ssh login
 alias remote_in="ssh username@192.0.0.0"
@@ -155,7 +164,7 @@ function syncnpm() {
   then
     if [ "$1" == "g" ]
     then
-      npm i -g ncu
+      npm i -g npm-check-updates
     fi
   fi
   ncu -u
@@ -198,3 +207,4 @@ function blush() {
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm use --delete-prefix v8.11.3 --silent
