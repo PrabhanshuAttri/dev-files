@@ -17,8 +17,8 @@ set foldnestmax=10      " limit nesting of folds
 "set nofoldenable        " open files unfoleded
 set foldlevel=1         " fold level
 
-set colorcolumn=120
-setlocal textwidth=120
+set colorcolumn=100
+setlocal textwidth=100
 
 set mouse=a  " enable all mouse scroll
 
@@ -152,6 +152,9 @@ Plugin 'Raimondi/delimitMate'
 " color schemes
 "Plugin 'altercation/vim-colors-solarized'
 Plugin 'crusoexia/vim-monokai'
+
+" JSX
+Plugin 'chemzqm/vim-jsx-improve'
 
 
 call vundle#end()            " required
