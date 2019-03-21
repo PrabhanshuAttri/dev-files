@@ -23,10 +23,7 @@ function setGpg() {
 
 function fedora() {
   echo "Installing required packages"
-  sudo dnf -y update
-  sudo dnf -y install vim-enhanced tmux cowsay fortune-mod gnupg zsh curl wget
-  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  ./installers/fedora
 }
 
 function ubuntu() {
@@ -37,6 +34,17 @@ function mac() {
   echo "Mac OSX"
   brew update
 }
+
+cd
+echo "Cloning dotfiles"
+git clone git@github.com:PrabhanshuAttri/dotfiles.git
+cd dotfiles
+
+echo "Copying dotfiles"
+cp bash_profile ~/.bash_profile
+cp tmux.conf ~/.tmux.conf
+cp vimrc ~/.vimrc
+cp zshrc ~/.zshrc
 
 echo "Detecting OS"
 mac=Mac
@@ -64,20 +72,6 @@ case "${unameOut}" in
       ;;
 esac
 
-cd
-git config --global commit.gpgsign true 
-echo "Cloning dotfiles"
-git clone git@github.com:PrabhanshuAttri/dotfiles.git
-cd dotfiles
-
-echo "Copying dotfiles"
-cp bash_profile ~/.bash_profile
-cp tmux.conf ~/.tmux.conf
-cp vimrc ~/.vimrc
-cp zshrc ~/.zshrc
-cd ../
-rm -rf dotfiles
-
 echo "Installing tmux plugins"
 rm -rf ~/.tmux/plugins/tpm
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -89,3 +83,7 @@ rm -rf ~/.vim/bundle/Vundle.vim
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
+cd ../
+rm -rf dotfiles
+
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
