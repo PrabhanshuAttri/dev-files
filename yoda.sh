@@ -24,8 +24,9 @@ function setGpg() {
 function fedora() {
   echo "Installing required packages"
   sudo dnf -y update
-  sudo dnf -y install vim-enhanced tmux cowsay fortune-mod gnupg
-  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+  sudo dnf -y install vim-enhanced tmux cowsay fortune-mod gnupg zsh curl wget
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 }
 
 function ubuntu() {
@@ -34,6 +35,7 @@ function ubuntu() {
 
 function mac() {
   echo "Mac OSX"
+  brew update
 }
 
 echo "Detecting OS"
@@ -62,6 +64,8 @@ case "${unameOut}" in
       ;;
 esac
 
+cd
+git config --global commit.gpgsign true 
 echo "Cloning dotfiles"
 git clone git@github.com:PrabhanshuAttri/dotfiles.git
 cd dotfiles
