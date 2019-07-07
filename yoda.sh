@@ -28,6 +28,7 @@ function fedora() {
 
 function ubuntu() {
   echo "Ubuntu"
+  ./installers/ubuntu
 }
 
 function mac() {
@@ -52,11 +53,24 @@ linux=Linux
 other=Other
 
 unameOut="$(uname -s)"
+chmod +x ./installers/*
 case "${unameOut}" in
     Linux*)
       machine="$linux"
       echo "OS Detected: ${machine}"
-      fedora
+      distro="$(awk -F= '/^NAME/{print $2}' /etc/os-release | sed -e 's/^"//' -e 's/"$//')"
+
+      case "${distro}" in
+        Ubuntu*)
+          ubuntu
+          ;;
+        Fedora*)
+          fedora
+          ;;
+         *)
+          ;;
+       esac
+
       setGpg gpg2
       ;;
     Darwin*)
