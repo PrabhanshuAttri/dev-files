@@ -3,7 +3,7 @@ cd ~/Downloads
 printf "\nInstalling Update and Upgrade\n"
 sudo apt-get install ubuntu-restricted-extras software-properties-common -y && sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y
 
-printf "\nInstalling Installing Google-Chrome\n"
+printf "\nInstalling Google-Chrome\n"
 wget -nc --content-disposition https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome*.deb
 
