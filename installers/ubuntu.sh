@@ -25,8 +25,11 @@ sudo apt-get install cowsay fortune-mod -y
 printf "\nInstalling Gdebi\n"
 sudo apt-get install gdebi -y
 
-printf "\nInstalling vim and zsh\n"
-sudo apt-get install vim vim-nox zsh -y
+printf "\nInstalling vim, tmux and zsh\n"
+sudo apt-get install vim vim-nox zsh tmux -y
+
+printf "\nInstalling Chrome Gnome Shell\n"
+sudo apt-get install chrome-gnome-shell -y
 
 printf "\nInstalling Curl\n"
 sudo apt-get install curl -y
@@ -36,6 +39,9 @@ sudo apt-get remove account-plugin-aim account-plugin-google account-plugin-face
 
 printf "\nInstalling Synapse\n"
 sudo apt-get install synapse -y
+
+printf "\nInstalling LibreOffice\n"
+sudo apt-get install libreoffice -y
 
 printf "\nInstalling VLC\n"
 sudo apt-get update
@@ -47,7 +53,7 @@ sudo apt-get install gnome-tweak-tool -y
 printf "\nInstalling numix icon and wallpaper pack\n"
 sudo add-apt-repository ppa:numix/ppa -y
 sudo apt-get update
-sudo apt-get install numix-gtk-theme numix-icon-theme-circle numix-wallpaper-notd -y
+sudo apt-get install numix-gtk-theme numix-icon-theme-circle numix-icon-theme-square -y
 
 printf "\nInstalling Plank\n"
 sudo add-apt-repository ppa:ricotz/docky -y
@@ -148,7 +154,10 @@ sudo apt install tlp tlp-rdw -y
 sudo tlp start
 
 printf "\nRemove duplicate sources\n"
-sudo apt install python3-apt -y && wget https://raw.githubusercontent.com/davidfoerster/apt-remove-duplicate-source-entries/master/apt-remove-duplicate-source-entries.py && chmod +x apt-remove-duplicate-source-entries.py && sudo ./apt-remove-duplicate-source-entries.py -y && rm apt-remove-duplicate-source-entries.py
+sudo apt install python3-apt python3-regex -y
+curl -L https://github.com/davidfoerster/aptsources-cleanup/releases/download/v0.1.6.3/aptsources-cleanup.zip
+sudo python3 -OEs aptsources-cleanup.zip
+#sudo apt install python3-apt -y && wget https://raw.githubusercontent.com/davidfoerster/apt-remove-duplicate-source-entries/master/apt-remove-duplicate-source-entries.py && chmod +x apt-remove-duplicate-source-entries.py && sudo ./apt-remove-duplicate-source-entries.py -y && rm apt-remove-duplicate-source-entries.py
 
 printf "\nUpdate everything\n"
 sudo apt-get install ubuntu-restricted-extras -y && sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y
