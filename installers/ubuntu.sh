@@ -157,7 +157,6 @@ printf "\nRemove duplicate sources\n"
 sudo apt install python3-apt python3-regex -y
 curl -L https://github.com/davidfoerster/aptsources-cleanup/releases/download/v0.1.6.3/aptsources-cleanup.zip
 sudo python3 -OEs aptsources-cleanup.zip
-#sudo apt install python3-apt -y && wget https://raw.githubusercontent.com/davidfoerster/apt-remove-duplicate-source-entries/master/apt-remove-duplicate-source-entries.py && chmod +x apt-remove-duplicate-source-entries.py && sudo ./apt-remove-duplicate-source-entries.py -y && rm apt-remove-duplicate-source-entries.py
 
 printf "\nUpdate everything\n"
 sudo apt-get install ubuntu-restricted-extras -y && sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y
