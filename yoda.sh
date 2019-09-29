@@ -47,6 +47,9 @@ cp tmux.conf ~/.tmux.conf
 cp vimrc ~/.vimrc
 cp zshrc ~/.zshrc
 
+echo "Copying fonts"
+cp -rf fonts ~/.fonts
+
 echo "Detecting OS"
 mac=Mac
 linux=Linux
