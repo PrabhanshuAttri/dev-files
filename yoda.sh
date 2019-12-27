@@ -9,6 +9,7 @@ function commons() {
   echo "Cloning dotfiles"
   git clone https://github.com/PrabhanshuAttri/dotfiles.git
   cd dotfiles
+  chmod +x ./installers/*
 
   echo "Copying dotfiles"
   cp bash_profile ~/.bash_profile
@@ -63,7 +64,6 @@ linux=Linux
 other=Other
 
 unameOut="$(uname -s)"
-chmod +x ./installers/*
 case "${unameOut}" in
     Linux*)
       machine="$linux"
