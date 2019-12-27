@@ -15,7 +15,7 @@ My dot files.
 - Sweeper: Removes credentials and settings from the system
 
    ```
-   curl -o- https://raw.githubusercontent.com/PrabhanshuAttri/dotfiles/master/sweeper.sh | bash
+   curl -H 'Cache-Control: no-cache' -o- https://raw.githubusercontent.com/PrabhanshuAttri/dotfiles/master/sweeper.sh | bash
    ```
    
 ## Issues
