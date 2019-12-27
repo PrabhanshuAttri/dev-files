@@ -44,7 +44,7 @@ function fedora() {
 }
 
 function ubuntu() {
-  sudo apt-get install git -y
+  sudo apt-get install git zsh -y
   commons
   echo "Ubuntu"
   ./installers/ubuntu
