@@ -7,7 +7,7 @@ echo "Do or do not, there is no try."
 function commons() {
   cd
   echo "Cloning dotfiles"
-  git clone git@github.com:PrabhanshuAttri/dotfiles.git
+  git clone https://github.com/PrabhanshuAttri/dotfiles.git
   cd dotfiles
 
   echo "Copying dotfiles"
