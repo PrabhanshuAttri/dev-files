@@ -13,7 +13,7 @@ sudo apt-get update -y
 sudo apt-get install opera-stable -y
 
 printf "\nInstalling dependencies\n"
-sudo apt install apt-transport-https -y
+sudo apt-get install apt-transport-https -y
 
 printf "\nInstalling flush dns tool nscd\n"
 sudo apt-get install nscd -y
@@ -40,12 +40,16 @@ sudo apt-get remove account-plugin-aim account-plugin-google account-plugin-face
 printf "\nInstalling Synapse\n"
 sudo apt-get install synapse -y
 
+printf "\nInstalling System Load Indicator\n"
+sudo apt-get install indicator-multiload -y
+
 printf "\nInstalling LibreOffice\n"
 sudo apt-get install libreoffice -y
 
 printf "\nInstalling VLC\n"
 sudo apt-get update
 sudo apt-get install vlc browser-plugin-vlc -y
+mkdir ~/.cache/vlc
 
 printf "\nInstalling tweak\n"
 sudo apt-get install gnome-tweak-tool -y
@@ -80,7 +84,7 @@ sudo apt-get install youtube-dl -y
 
 printf "\nInstalling skype\n"
 wget https://go.skype.com/skypeforlinux-64.deb
-sudo apt install ./skypeforlinux-64.deb -y
+sudo apt-get install ./skypeforlinux-64.deb -y
 
 printf "\nInstalling teamviewer\n"
 wget -nc --content-disposition https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
@@ -110,8 +114,8 @@ sudo apt-get install gparted -y
 printf "\nInstalling tor browser\n"
 wget -q -O - https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | sudo apt-key add -
 echo "deb https://deb.torproject.org/torproject.org $(lsb_release -cs) main" | sudo tee -a /etc/apt/sources.list
-sudo apt update -y
-sudo apt install tor deb.torproject.org-keyring torbrowser-launcher -y
+sudo apt-get update -y
+sudo apt-get install tor deb.torproject.org-keyring torbrowser-launcher -y
 
 printf "\nInstalling IRC client - Konversation\n"
 sudo apt-get install konversation -y
@@ -137,7 +141,7 @@ cat > ~/.local/share/applications/postman.desktop <<EOL
 Encoding=UTF-8
 Name=Postman
 Exec=postman
-Icon=/opt/Postman/resources/app/assets/icon.png
+Icon=/opt/Postman/app/resources/app/assets/icon.png
 Terminal=false
 Type=Application
 Categories=Development;
@@ -150,11 +154,11 @@ printf "\nRemoving Amazon\n"
 echo 'Hidden=true' | cat /usr/share/applications/ubuntu-amazon-default.desktop - > ~/.local/share/applications/ubuntu-amazon-default.desktop
 
 printf "\nInstalling TLP for power saving\n"
-sudo apt install tlp tlp-rdw -y
+sudo apt-get install tlp tlp-rdw -y
 sudo tlp start
 
 printf "\nRemove duplicate sources\n"
-sudo apt install python3-apt python3-regex -y
+sudo apt-get install python3-apt python3-regex -y
 curl -L https://github.com/davidfoerster/aptsources-cleanup/releases/download/v0.1.6.3/aptsources-cleanup.zip
 sudo python3 -OEs aptsources-cleanup.zip
 

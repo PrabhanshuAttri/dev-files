@@ -4,6 +4,22 @@ echo "Do or do not, there is no try."
 # gpg --export-secret-keys > secret.asc
 # gpg --export-ownertrust > trust_db.txt
 
+function commons() {
+  cd
+  echo "Cloning dotfiles"
+  git clone git@github.com:PrabhanshuAttri/dotfiles.git
+  cd dotfiles
+
+  echo "Copying dotfiles"
+  cp bash_profile ~/.bash_profile
+  cp tmux.conf ~/.tmux.conf
+  cp vimrc ~/.vimrc
+  cp zshrc ~/.zshrc
+
+  echo "Copying fonts"
+  cp -rf fonts ~/.fonts
+}
+
 function setGpg() {
   GPG_PROGRAM=$1
   GPG_SECRET=secret.asc
@@ -22,33 +38,23 @@ function setGpg() {
 }
 
 function fedora() {
+  commons
   echo "Installing required packages"
   ./installers/fedora
 }
 
 function ubuntu() {
+  sudo apt-get install git -y
+  commons
   echo "Ubuntu"
   ./installers/ubuntu
 }
 
 function mac() {
+  commons
   echo "Mac OSX"
   brew update
 }
-
-cd
-echo "Cloning dotfiles"
-git clone git@github.com:PrabhanshuAttri/dotfiles.git
-cd dotfiles
-
-echo "Copying dotfiles"
-cp bash_profile ~/.bash_profile
-cp tmux.conf ~/.tmux.conf
-cp vimrc ~/.vimrc
-cp zshrc ~/.zshrc
-
-echo "Copying fonts"
-cp -rf fonts ~/.fonts
 
 echo "Detecting OS"
 mac=Mac
