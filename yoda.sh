@@ -41,7 +41,7 @@ function setGpg() {
 function fedora() {
   commons
   echo "Installing required packages"
-  ./installers/fedora
+  ./installers/fedora.sh
 }
 
 function ubuntu() {
@@ -49,7 +49,7 @@ function ubuntu() {
   sudo apt-get install git zsh -y
   commons
   echo "Ubuntu"
-  ./installers/ubuntu
+  ./installers/ubuntu.sh
 }
 
 function mac() {
