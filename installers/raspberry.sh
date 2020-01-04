@@ -8,6 +8,7 @@ sudo apt-get install vim vim-nox -y
 sudo apt-get install curl wget -y
 sudo apt-get install youtube-dl -y
 sudo apt-get install git htop -y
+sudo apt-get install screen -y
 
 echo "fortune | cowsay -f tux" >> ~/.bash_profile
 source ~/.bash_profile
