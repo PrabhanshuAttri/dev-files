@@ -28,8 +28,8 @@ sudo apt-get install cowsay fortune-mod -y
 printf "\nInstalling Gdebi\n"
 sudo apt-get install gdebi -y
 
-printf "\nInstalling vim, tmux and zsh\n"
-sudo apt-get install vim vim-nox zsh tmux -y
+printf "\nInstalling vim, tmux, zsh and htop\n"
+sudo apt-get install vim vim-nox zsh tmux htop -y
 
 printf "\nInstalling Chrome Gnome Shell\n"
 sudo apt-get install chrome-gnome-shell -y
