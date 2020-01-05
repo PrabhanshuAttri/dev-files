@@ -7,9 +7,12 @@ sudo apt-get install cowsay fortune-mod -y
 sudo apt-get install vim vim-nox -y
 sudo apt-get install curl wget -y
 sudo apt-get install youtube-dl -y
-sudo apt-get install git htop -y
+sudo apt-get install git htop zsh -y
 sudo apt-get install screen -y
 
-echo "fortune | cowsay -f tux" >> ~/.bash_profile
-source ~/.bash_profile
+chsh -s /bin/zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+echo "fortune | cowsay -f tux" >> ~/.zshrc
+source ~/.zshrc
 
