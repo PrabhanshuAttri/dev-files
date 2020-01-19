@@ -31,6 +31,9 @@ sudo apt-get install gdebi -y
 printf "\nInstalling vim, tmux, zsh and htop\n"
 sudo apt-get install vim vim-nox zsh tmux htop -y
 
+printf "\nInstalling git\n"
+sudo apt-get install git -y
+
 printf "\nInstalling Chrome Gnome Shell\n"
 sudo apt-get install chrome-gnome-shell -y
 
@@ -123,8 +126,8 @@ sudo apt-get install tor deb.torproject.org-keyring torbrowser-launcher -y
 printf "\nInstalling IRC client - Konversation\n"
 sudo apt-get install konversation -y
 
-printf "\nInstalling git\n"
-sudo apt-get install git -y
+printf "\nInstalling pomodoro"
+sudo apt-get install gnome-shell-pomodoro -y
 
 printf "\nInstalling sublime\n"
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add
