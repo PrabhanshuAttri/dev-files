@@ -1,8 +1,12 @@
 set history=1000
 
+" configure expanding of tabs for various file types
+au BufRead,BufNewFile *.py set expandtab
+au BufRead,BufNewFile *.c set noexpandtab
+au BufRead,BufNewFile *.h set noexpandtab
+au BufRead,BufNewFile Makefile* set noexpandtab
 
 " Text Formatting
-set autoindent                                               " autoindent
 set smartindent                                              " be smart about it
 set shiftwidth=2                                             " normal mode indentation commands use 2 spaces
 set shiftround                                               " use multiple of shiftwidth when indenting with '<' and '>'
@@ -11,6 +15,7 @@ set softtabstop=2                                            " insert mode tab a
 set backspace=2                                              " Fix broken backspace in some setups
 set expandtab                                                " expand tabs to spaces
 set autoread                                                 " autoread file changes from disk
+set autoindent                                               " autoindent
 
 set foldmethod=indent   " folds based on indentation
 set foldnestmax=10      " limit nesting of folds
@@ -18,7 +23,7 @@ set foldnestmax=10      " limit nesting of folds
 set foldlevel=1         " fold level
 
 set colorcolumn=100
-setlocal textwidth=100
+setlocal textwidth=120
 
 set mouse=a  " enable all mouse scroll
 
