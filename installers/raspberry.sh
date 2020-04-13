@@ -3,7 +3,7 @@
 cd ~/Downloads
 
 function showStatus() {
-	showStatus "${1}\n"
+	printf "${1}\n"
 }
 
 showStatus "Running RaspberryPi setup"
