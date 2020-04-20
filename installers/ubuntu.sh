@@ -186,6 +186,9 @@ Type=Application
 Categories=Development;
 EOL
 
+showStatus "Installing Machine Learning packages"
+python3 -m pip install jupyter notebook tensorflow tensorflow-gpu scikit-learn scipy matplotlib tensorflow_datasets tensorflow-hub
+
 showStatus "Installing TLP for power saving"
 sudo apt-get install tlp tlp-rdw -y
 sudo tlp start
