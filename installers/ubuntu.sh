@@ -58,8 +58,8 @@ sudo apt-get install cowsay fortune-mod -y
 showStatus "Installing Gdebi"
 sudo apt-get install gdebi -y
 
-showStatus "Installing vim, tmux, zsh and htop"
-sudo apt-get install vim vim-nox zsh tmux htop -y
+showStatus "Installing vim, tmux, zsh, htop and tree"
+sudo apt-get install vim vim-nox zsh tmux htop tree -y
 
 showStatus "Installing git"
 sudo apt-get install git -y
