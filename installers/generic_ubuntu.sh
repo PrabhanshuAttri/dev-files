@@ -6,8 +6,12 @@ function showStatus() {
 	printf "\n${1}\n"
 }
 
+function install() {
+  sudo apt-get install -y "$@"
+}
+
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
-sudo apt-get install ttf-mscorefonts-installer
+sudo apt-get install ttf-mscorefonts-installer -y
 
 showStatus "Installing Update and Upgrade"
 sudo apt-get install ubuntu-restricted-extras software-properties-common -y && sudo apt-get update -y && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y
