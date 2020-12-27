@@ -22,9 +22,10 @@ set foldnestmax=10      " limit nesting of folds
 "set nofoldenable        " open files unfoleded
 set foldlevel=1         " fold level
 
-set colorcolumn=100
+set colorcolumn=90
 setlocal textwidth=120
 
+set belloff=all
 set mouse=a  " enable all mouse scroll
 
 set number              " show line numbers
@@ -77,7 +78,7 @@ endif
 set ignorecase
 set smartcase
 set fileformat=unix
-"set columns=80
+"set columns=90
 "olorscheme ron
 
 filetype plugin on

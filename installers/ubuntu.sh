@@ -7,43 +7,17 @@ function showStatus() {
 }
 
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
-sudo apt-get install ttf-mscorefonts-installer
+sudo apt-get install ttf-mscorefonts-installer -y
 
 showStatus "Installing Update and Upgrade"
 sudo apt-get install ubuntu-restricted-extras software-properties-common -y && sudo apt-get update -y && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y
-
-showStatus "Adding NVIDIA package repositories"
-wget -nc https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-repo-ubuntu1804_10.1.243-1_amd64.deb
-sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
-sudo dpkg -i cuda-repo-ubuntu1804_10.1.243-1_amd64.deb
-sudo apt-get update -y
-wget -nc http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
-sudo apt install ./nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb -y
-sudo apt-get update -y
-
-showStatus "Installing NVIDIA driver"
-sudo apt-get install --no-install-recommends nvidia-driver-430 -y
-# Reboot. Check that GPUs are visible using the command: nvidia-smi
-
-showStatus "Installing development and runtime libraries (~4GB)"
-sudo apt-get install -y --no-install-recommends \
-    cuda-10-1 \
-    libcudnn7=7.6.4.38-1+cuda10.1  \
-    libcudnn7-dev=7.6.4.38-1+cuda10.1
-
-showStatus "Installing TensorRT and libcudnn7"
-sudo apt-get install -y --no-install-recommends libnvinfer6=6.0.1-1+cuda10.1 \
-    libnvinfer-dev=6.0.1-1+cuda10.1 \
-    libnvinfer-plugin6=6.0.1-1+cuda10.1
 
 showStatus "Installing Google-Chrome"
 wget -nc --content-disposition https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome*.deb
 
-wget -qO- https://deb.opera.com/archive.key | sudo apt-key add -
-sudo add-apt-repository "deb [arch=i386,amd64] https://deb.opera.com/opera-stable/ stable non-free"
-sudo apt-get update -y
-sudo apt-get install opera-stable -y
+showStatus ""
+sudo apt-get install chromium-browser -y
 
 showStatus "Installing dependencies"
 sudo apt-get install apt-transport-https -y
@@ -70,9 +44,6 @@ sudo apt-get install chrome-gnome-shell -y
 showStatus "Installing Curl"
 sudo apt-get install curl -y
 
-showStatus "Removing Bloatware"
-sudo apt-get remove account-plugin-aim account-plugin-google account-plugin-facebook account-plugin-flickr account-plugin-jabber account-plugin-salut account-plugin-twitter account-plugin-windows-live account-plugin-yahoo aisleriot brltty colord deja-dup deja-dup-backend-gvfs duplicity empathy empathy-common evolution-data-server-online-accounts example-content gnome-accessibility-themes gnome-contacts gnome-mahjongg gnome-mines gnome-orca gnome-sudoku gnome-video-effects gnomine landscape-common libsane libsane-common mcp-account-manager-uoa python3-uno rhythmbox rhythmbox-plugins rhythmbox-plugin-zeitgeist sane-utils shotwell shotwell-common telepathy-gabble telepathy-haze telepathy-idle telepathy-indicator telepathy-logger telepathy-mission-control-5 telepathy-salut thunderbird thunderbird-gnome-support totem totem-common totem-plugins unity-scope-audacious unity-scope-chromiumbookmarks unity-scope-clementine unity-scope-colourlovers unity-scope-devhelp unity-scope-gdrive unity-scope-gmusicbrowser unity-scope-gourmet unity-scope-manpages unity-scope-musicstores unity-scope-musique unity-scope-openclipart unity-scope-texdoc unity-scope-tomboy unity-scope-video-remote unity-scope-virtualbox unity-scope-yelp unity-scope-zotero -y
-
 showStatus "Installing Synapse"
 sudo apt-get install synapse -y
 
@@ -84,7 +55,7 @@ sudo apt-get install libreoffice -y
 
 showStatus "Installing VLC"
 sudo apt-get update
-sudo apt-get install vlc browser-plugin-vlc -y
+sudo apt-get install vlc -y
 mkdir ~/.cache/vlc
 
 showStatus "Installing tweak"
@@ -114,6 +85,9 @@ Comment=plank
 X-GNOME-Autostart-Delay=2
 X-GNOME-Autostart-enabled=true
 EOL
+
+showStatus "Installing Pip"
+sudo apt-get -y install python3-pip
 
 showStatus "Installing Youtube Downloader"
 sudo apt-get install youtube-dl -y

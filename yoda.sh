@@ -1,64 +1,67 @@
-echo "Do or do not, there is no try."
+#!/bin/bash
 
+function showStatus() {
+	printf "\n${1}\n"
+  printf "#######################################\n"
+}
+
+showStatus "Do or do not, there is no try."
 # How to export gpg keys
 # gpg --export-secret-keys > secret.asc
 # gpg --export-ownertrust > trust_db.txt
+# git config --global user.signingkey {key}
 
 function commons() {
   cd
-  echo "Cloning dotfiles"
+  showStatus "Cloning dotfiles"
   git clone https://github.com/PrabhanshuAttri/dotfiles.git
   cd dotfiles
   chmod +x ./installers/*
 
-  echo "Copying dotfiles"
+  showStatus "Copying dotfiles"
   cp bash_profile ~/.bash_profile
   cp tmux.conf ~/.tmux.conf
   cp vimrc ~/.vimrc
   cp zshrc ~/.zshrc
 
-  echo "Copying fonts"
+  showStatus "Copying fonts"
   cp -rf fonts ~/.fonts
 }
 
 function setGpg() {
-  GPG_PROGRAM=$1
-  GPG_SECRET=secret.asc
-  GPG_TRUSTDB=trust_db.txt
+  GPG_SECRET=~/secrets/secret.asc
+  GPG_TRUSTDB=~/secrets/trust_db.txt
   if [ -f GPG_SECRET ] && [ -f GPG_TRUSTDB ];
   then
-    echo "GPG"
-    gpg --import GPG_SECRET
-    gpg --import-ownertrust GPG_TRUSTDB
+    showStatus "GPG"
+    gpg --import $GPG_SECRET
+    gpg --import-ownertrust $GPG_TRUSTDB
 
     git config --global commit.gpgsign true
-    git config --global gpg.program $GPG_PROGRAM
-
     gpgconf --kill gpg-agent
   fi
 }
 
 function fedora() {
   commons
-  echo "Installing required packages"
+  showStatus "Installing required packages"
   ./installers/fedora.sh
 }
 
 function ubuntu() {
   rm -rf ~/.oh-my-zsh
-  sudo apt-get install git zsh -y
   commons
-  echo "Ubuntu"
+  showStatus "Ubuntu"
   ./installers/ubuntu.sh
 }
 
 function mac() {
   commons
-  echo "Mac OSX"
+  showStatus "Mac OSX"
   brew update
 }
 
-echo "Detecting OS"
+showStatus "Detecting OS"
 mac=Mac
 linux=Linux
 other=Other
@@ -67,7 +70,7 @@ unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)
       machine="$linux"
-      echo "OS Detected: ${machine}"
+      showStatus "OS Detected: ${machine}"
       distro="$(awk -F= '/^NAME/{print $2}' /etc/os-release | sed -e 's/^"//' -e 's/"$//')"
 
       case "${distro}" in
@@ -85,24 +88,24 @@ case "${unameOut}" in
       ;;
     Darwin*)
       machine="$mac"
-      echo "OS Detected: ${machine}"
+      showStatus "OS Detected: ${machine}"
       mac
       setGpg gpg
       ;;
     *)
       machine="${unameOut}"
-      echo "OS Detected: ${machine}"
-      echo "OS Not Supported. Please install vim, tmux, cowsay, fortune-mod, nvm and zsh manually"
+      showStatus "OS Detected: ${machine}"
+      showStatus "OS Not Supported. Please install vim, tmux, cowsay, fortune-mod, nvm and zsh manually"
       ;;
 esac
 
-echo "Installing tmux plugins"
+showStatus "Installing tmux plugins"
 rm -rf ~/.tmux/plugins/tpm
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh
 tmux source ~/.tmux.conf
 
-echo "Installing Vim Vundles"
+showStatus "Installing Vim Vundles"
 rm -rf ~/.vim/bundle/Vundle.vim
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
